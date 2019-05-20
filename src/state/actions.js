@@ -6,7 +6,7 @@ export const actionNames = {
 
 export function fetchHotels(param) {
   let attribute = "",
-    endpoint = "https://pure-dawn-30271.herokuapp.com/api",
+    endpoint = "https://hetels.herokuapp.com/api",
     resource = "hotel";
 
   if (param.type === "hotels") {
@@ -29,9 +29,10 @@ export function fetchHotels(param) {
     dispatch({ type: actionNames.FETCH_LOADING });
 
     try {
-      let response = await fetch(
-        `${endpoint}/${resource}?${attribute}=${param.data}`
-      );
+      const params = attribute
+        ? "?" + attribute + "=" + (param.data || "")
+        : "";
+      let response = await fetch(`${endpoint}/${resource}${params}`);
       let data = await response.json();
 
       dispatch({
